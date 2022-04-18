@@ -10,7 +10,8 @@ import utam.slack.pageobjects.Client
 import utam.slack.pageobjects.Login
 import utam.slack.pageobjects.Redirect
 import utam.slack.pageobjects.Search
-import java.util.Properties
+import java.util.*
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -34,15 +35,29 @@ class SampleSlackUiTest {
     }
 
     @Test
-    fun testSearch() {
+    fun postMessage() {
         val client = loader.load(Client::class.java)
-        client.topNavSearch.click()
-
-        loader.load(Search::class.java).search("テスト")
-
-        for (result in client.waitForSearchResults()) {
-            println(result.text)
-            assertTrue(result.text.contains("テスト"))
+        for (message in arrayOf("Hello", "こんにちは")) {
+            client.messageInput.clearAndType(message)
+            client.textSendButton.click()
+            assertEquals(message, client.messageTexts.last().text)
+            Thread.sleep(200)
         }
+        Thread.sleep(2000)
+    }
+
+    @Test
+    fun searchOnTopNavigation() {
+        val client = loader.load(Client::class.java)
+        for (message in arrayOf("Hello", "こんにちは")) {
+            client.topNavSearch.click()
+            loader.load(Search::class.java).search(message)
+            for (result in client.waitForSearchResults()) {
+                println(result.text)
+                assertTrue(result.text.uppercase().contains(message.uppercase()))
+            }
+            Thread.sleep(2000)
+        }
+        client.searchPageCloseButton.click()
     }
 }

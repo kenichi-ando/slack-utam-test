@@ -20,6 +20,44 @@
                 "css": "[data-qa='search_result']",
                 "returnAll": true
             }
+        },
+        {
+            "name": "searchPageCloseButton",
+            "selector": {
+                "css": "[data-qa='search_page_close_button']"
+            },
+            "type": [
+                "clickable"
+            ],
+            "public": true
+        },
+        {
+            "name": "messageInput",
+            "selector": {
+                "css": "[data-qa='message_input'] .ql-editor"
+            },
+            "type": [
+                "editable"
+            ],
+            "public": true
+        },
+        {
+            "name": "textSendButton",
+            "selector": {
+                "css": "[data-qa='texty_send_button']"
+            },
+            "type": [
+                "clickable"
+            ],
+            "public": true
+        },
+        {
+            "name": "messageTexts",
+            "selector": {
+                "css": "[data-qa='message-text']",
+                "returnAll": true
+            },
+            "public": true
         }
     ],
     "methods": [
