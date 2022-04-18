@@ -1,0 +1,43 @@
+{
+    "root": true,
+    "selector": {
+        "css": ".c-search_modal__wrapper"
+    },
+    "elements": [
+        {
+            "name": "input",
+            "selector": {
+                "css": "[data-qa='focusable_search_input'] .ql-editor"
+            },
+            "type": [
+                "editable"
+            ]
+        }
+    ],
+    "methods": [
+        {
+            "name": "search",
+            "compose": [
+                {
+                    "element": "input",
+                    "apply": "clearAndType",
+                    "args": [
+                        {
+                            "name": "word",
+                            "type": "string"
+                        }
+                    ]
+                },
+                {
+                    "element": "input",
+                    "apply": "press",
+                    "args": [
+                        {
+                            "value": "ENTER"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

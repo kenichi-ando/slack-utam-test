@@ -1,0 +1,49 @@
+{
+    "root": true,
+    "selector": {
+        "css": ".p-client"
+    },
+    "elements": [
+        {
+            "name": "topNavSearch",
+            "selector": {
+                "css": "[data-qa='top_nav_search']"
+            },
+            "type": [
+                "clickable"
+            ],
+            "public": true
+        },
+        {
+            "name": "searchResults",
+            "selector": {
+                "css": "[data-qa='search_result']",
+                "returnAll": true
+            }
+        }
+    ],
+    "methods": [
+        {
+            "name": "waitForSearchResults",
+            "compose": [
+                {
+                    "apply": "waitFor",
+                    "args": [
+                        {
+                            "type": "function",
+                            "predicate": [
+                                {
+                                    "element": "searchResults",
+                                    "apply": "isVisible"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "element": "searchResults"
+                }
+            ]
+        }
+    ]
+}

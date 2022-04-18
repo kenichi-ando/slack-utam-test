@@ -1,0 +1,38 @@
+{
+    "root": true,
+    "selector": {
+        "css": ".p-ssb_redirect__body"
+    },
+    "elements": [
+        {
+            "name": "link",
+            "selector": {
+                "css": ".c-link"
+            },
+            "type": [
+                "clickable"
+            ]
+        }
+    ],
+    "methods": [
+        {
+            "name": "waitAndClick",
+            "compose": [
+                {
+                    "apply": "waitFor",
+                    "args": [
+                        {
+                            "type": "function",
+                            "predicate": [
+                                {
+                                    "element": "link",
+                                    "apply": "click"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
