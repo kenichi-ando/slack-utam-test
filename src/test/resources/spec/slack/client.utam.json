@@ -1,8 +1,4 @@
 {
-    "root": true,
-    "selector": {
-        "css": ".p-client"
-    },
     "elements": [
         {
             "name": "topNavSearch",
@@ -25,6 +21,16 @@
             "name": "searchPageCloseButton",
             "selector": {
                 "css": "[data-qa='search_page_close_button']"
+            },
+            "type": [
+                "clickable"
+            ],
+            "public": true
+        },
+        {
+            "name": "generalChannel",
+            "selector": {
+                "css": "[data-qa='channel_sidebar_name_general']"
             },
             "type": [
                 "clickable"

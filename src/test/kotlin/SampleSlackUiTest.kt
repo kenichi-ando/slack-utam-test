@@ -1,17 +1,18 @@
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 import utam.core.driver.DriverType
+import utam.core.framework.base.RootPageObject
 import utam.core.framework.consumer.UtamLoaderConfigImpl
 import utam.core.framework.consumer.UtamLoaderImpl
 import utam.core.selenium.factory.WebDriverFactory
-import utam.slack.pageobjects.Client
-import utam.slack.pageobjects.Login
-import utam.slack.pageobjects.Redirect
-import utam.slack.pageobjects.Search
+import utam.slack.pageobjects.*
 import java.util.*
+import kotlin.reflect.KClass
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -22,11 +23,13 @@ class SampleSlackUiTest {
         Properties().apply { load(it) }
     }
 
+    private fun <T : RootPageObject> from(type: KClass<T>): T = loader.load(type.java)
+
     @BeforeAll
     fun initialize() {
         driver.get(props.getProperty("slack.workspace.url"))
-        loader.load(Login::class.java).login(props.getProperty("slack.user.email"), props.getProperty("slack.user.password"))
-        loader.load(Redirect::class.java).waitAndClick()
+        from(Login::class).login(props.getProperty("slack.user.email"), props.getProperty("slack.user.password"))
+        from(Redirect::class).waitAndClick()
     }
 
     @AfterAll
@@ -34,30 +37,28 @@ class SampleSlackUiTest {
         driver.quit()
     }
 
-    @Test
-    fun postMessage() {
-        val client = loader.load(Client::class.java)
-        for (message in arrayOf("Hello", "こんにちは")) {
-            client.messageInput.clearAndType(message)
-            client.textSendButton.click()
-            assertEquals(message, client.messageTexts.last().text)
-            Thread.sleep(200)
-        }
+    @ParameterizedTest
+    @ValueSource(strings = ["Hello", "こんにちは"])
+    fun postMessage(message: String) {
+        val client = from(Desktop::class).client
+        client.generalChannel.click()
+        client.messageInput.clearAndType(message)
+        client.textSendButton.click()
+        assertNotNull(client.messageTexts)
+        assertEquals(message, client.messageTexts.last().text)
         Thread.sleep(2000)
     }
 
-    @Test
-    fun searchOnTopNavigation() {
-        val client = loader.load(Client::class.java)
-        for (message in arrayOf("Hello", "こんにちは")) {
-            client.topNavSearch.click()
-            loader.load(Search::class.java).search(message)
-            for (result in client.waitForSearchResults()) {
-                println(result.text)
-                assertTrue(result.text.uppercase().contains(message.uppercase()))
-            }
-            Thread.sleep(2000)
+    @ParameterizedTest
+    @ValueSource(strings = ["Hello", "こんにちは"])
+    fun searchOnTopNavigation(message: String) {
+        val desktop = from(Desktop::class)
+        desktop.client.topNavSearch.click()
+        desktop.searchModal.search(message)
+        for (result in desktop.client.waitForSearchResults()) {
+            println(result.text)
+            assertTrue(result.text.uppercase().contains(message.uppercase()))
         }
-        client.searchPageCloseButton.click()
+        Thread.sleep(2000)
     }
 }
