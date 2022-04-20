@@ -9,16 +9,107 @@
       "selector": {
         "css": ".p-client"
       },
-      "type": "utam-slack/pageObjects/client",
-      "public": true
+      "elements": [
+        {
+          "name": "topNavSearch",
+          "selector": {
+            "css": "[data-qa='top_nav_search']"
+          },
+          "type": [
+            "clickable"
+          ],
+          "public": true
+        },
+        {
+          "name": "searchResults",
+          "selector": {
+            "css": "[data-qa='search_result']",
+            "returnAll": true
+          }
+        },
+        {
+          "name": "searchPageCloseButton",
+          "selector": {
+            "css": "[data-qa='search_page_close_button']"
+          },
+          "type": [
+            "clickable"
+          ],
+          "public": true
+        },
+        {
+          "name": "generalChannel",
+          "selector": {
+            "css": "[data-qa='channel_sidebar_name_general']"
+          },
+          "type": [
+            "clickable"
+          ],
+          "public": true
+        },
+        {
+          "name": "messageInput",
+          "selector": {
+            "css": "[data-qa='message_input'] .ql-editor"
+          },
+          "type": [
+            "editable"
+          ],
+          "public": true
+        },
+        {
+          "name": "textSendButton",
+          "selector": {
+            "css": "[data-qa='texty_send_button']"
+          },
+          "type": [
+            "clickable"
+          ],
+          "public": true
+        },
+        {
+          "name": "messageTexts",
+          "selector": {
+            "css": "[data-qa='message-text']",
+            "returnAll": true
+          },
+          "public": true
+        }
+      ]
     },
     {
-      "name": "searchModal",
+      "name": "searchInput",
       "selector": {
-        "css": ".c-search_modal__wrapper"
+        "css": ".c-search_modal__wrapper [data-qa='focusable_search_input'] .ql-editor"
       },
-      "type": "utam-slack/pageObjects/search",
+      "type": [
+        "editable"
+      ],
       "public": true
+    }
+  ],
+  "methods": [
+    {
+      "name": "waitForSearchResults",
+      "compose": [
+        {
+          "apply": "waitFor",
+          "args": [
+            {
+              "type": "function",
+              "predicate": [
+                {
+                  "element": "searchResults",
+                  "apply": "isVisible"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "element": "searchResults"
+        }
+      ]
     }
   ],
   "beforeLoad": [

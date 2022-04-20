@@ -1,66 +1,38 @@
 {
-    "root": true,
-    "selector": {
-        "css": "#signin_form"
+  "root": true,
+  "selector": {
+    "css": "[data-qa='signin_header']"
+  },
+  "elements": [
+    {
+      "name": "email",
+      "selector": {
+        "css": "#email"
+      },
+      "type": [
+        "editable"
+      ],
+      "public": true
     },
-    "elements": [
-        {
-            "name": "email",
-            "selector": {
-                "css": "#email"
-            },
-            "type": [
-                "editable"
-            ]
-        },
-        {
-            "name": "password",
-            "selector": {
-                "css": "#password"
-            },
-            "type": [
-                "editable"
-            ]
-        },
-        {
-            "name": "signin",
-            "selector": {
-                "css": "#signin_btn"
-            },
-            "type": [
-                "clickable"
-            ]
-        }
-    ],
-    "methods": [
-        {
-            "name": "login",
-            "compose":[
-                {
-                    "element": "email",
-                    "apply": "clearAndType",
-                    "args": [
-                        {
-                            "name": "email",
-                            "type": "string"
-                        }
-                    ]
-                },
-                {
-                    "element": "password",
-                    "apply": "clearAndType",
-                    "args": [
-                        {
-                            "name": "password",
-                            "type": "string"
-                        }
-                    ]
-                },
-                {
-                    "element": "signin",
-                    "apply": "click"
-                }
-            ]
-        }
-    ]
+    {
+      "name": "password",
+      "selector": {
+        "css": "#password"
+      },
+      "type": [
+        "editable"
+      ],
+      "public": true
+    },
+    {
+      "name": "signin",
+      "selector": {
+        "css": "#signin_btn"
+      },
+      "type": [
+        "clickable"
+      ],
+      "public": true
+    }
+  ]
 }

@@ -1,38 +1,41 @@
 {
-    "root": true,
-    "selector": {
-        "css": ".p-ssb_redirect__body"
-    },
-    "elements": [
+  "root": true,
+  "selector": {
+    "css": "[data-qa='ssb_redirect_loading_page']"
+  },
+  "elements": [
+    {
+      "name": "link",
+      "selector": {
+        "css": ".p-ssb_redirect__loading_messages .c-link"
+      },
+      "type": [
+        "clickable"
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "name": "waitForLink",
+      "compose": [
         {
-            "name": "link",
-            "selector": {
-                "css": ".c-link"
-            },
-            "type": [
-                "clickable"
-            ]
-        }
-    ],
-    "methods": [
-        {
-            "name": "waitAndClick",
-            "compose": [
+          "apply": "waitFor",
+          "args": [
+            {
+              "type": "function",
+              "predicate": [
                 {
-                    "apply": "waitFor",
-                    "args": [
-                        {
-                            "type": "function",
-                            "predicate": [
-                                {
-                                    "element": "link",
-                                    "apply": "click"
-                                }
-                            ]
-                        }
-                    ]
+                  "element": "link",
+                  "apply": "isVisible"
                 }
-            ]
+              ]
+            }
+          ]
+        },
+        {
+          "element": "link"
         }
-    ]
+      ]
+    }
+  ]
 }

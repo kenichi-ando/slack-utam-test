@@ -1,26 +1,26 @@
 {
-    "module": "slack-test",
-    "pageObjectsRootDir": "/src/test/resources/spec",
-    "pageObjectsFilesMask": "(.*)\\.utam\\.json$",
-    "pageObjectsOutputDir": "/src/test/java",
-    "resourcesOutputDir": "/src/test/resources",
-    "unitTestsOutputDir": "/src/test/java",
-    "unitTestsRunner": "NONE",
-    "profiles": [
-        {
-            "name": "platform",
-            "values": [
-                "ios_phone",
-                "ios_tablet",
-                "android_phone",
-                "android_tablet"
-            ]
-        }
-    ],
-    "namespaces": [
-        {
-            "typeMatch": "utam-slack",
-            "pathMatch": ".*/slack"
-        }
-    ]
+  "module": "slack-test",
+  "pageObjectsRootDir": "/src/test/resources/spec",
+  "pageObjectsFilesMask": "(.*)\\.utam\\.json$",
+  "pageObjectsOutputDir": "/src/test/java",
+  "resourcesOutputDir": "/src/test/resources",
+  "unitTestsOutputDir": "/src/test/java",
+  "unitTestsRunner": "NONE",
+  "profiles": [
+    {
+      "name": "platform",
+      "values": [
+        "ios_phone",
+        "ios_tablet",
+        "android_phone",
+        "android_tablet"
+      ]
+    }
+  ],
+  "namespaces": [
+    {
+      "typeMatch": "utam-slack",
+      "pathMatch": ".*/slack"
+    }
+  ]
 }

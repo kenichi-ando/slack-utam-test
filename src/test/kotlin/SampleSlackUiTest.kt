@@ -8,7 +8,9 @@ import utam.core.framework.base.RootPageObject
 import utam.core.framework.consumer.UtamLoaderConfigImpl
 import utam.core.framework.consumer.UtamLoaderImpl
 import utam.core.selenium.factory.WebDriverFactory
-import utam.slack.pageobjects.*
+import utam.slack.pageobjects.Desktop
+import utam.slack.pageobjects.Login
+import utam.slack.pageobjects.Redirect
 import java.util.*
 import kotlin.reflect.KClass
 import kotlin.test.assertEquals
@@ -28,8 +30,12 @@ class SampleSlackUiTest {
     @BeforeAll
     fun initialize() {
         driver.get(props.getProperty("slack.workspace.url"))
-        from(Login::class).login(props.getProperty("slack.user.email"), props.getProperty("slack.user.password"))
-        from(Redirect::class).waitAndClick()
+        from(Login::class).run {
+            email.clearAndType(props.getProperty("slack.user.email"))
+            password.clearAndType(props.getProperty("slack.user.password"))
+            signin.click()
+        }
+        from(Redirect::class).waitForLink().click()
     }
 
     @AfterAll
@@ -40,24 +46,28 @@ class SampleSlackUiTest {
     @ParameterizedTest
     @ValueSource(strings = ["Hello", "こんにちは"])
     fun postMessage(message: String) {
-        val client = from(Desktop::class).client
-        client.generalChannel.click()
-        client.messageInput.clearAndType(message)
-        client.textSendButton.click()
-        assertNotNull(client.messageTexts)
-        assertEquals(message, client.messageTexts.last().text)
+        from(Desktop::class).run {
+            generalChannel.click()
+            messageInput.clearAndType(message)
+            textSendButton.click()
+            assertNotNull(messageTexts)
+            assertEquals(message, messageTexts.last().text)
+        }
         Thread.sleep(2000)
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["Hello", "こんにちは"])
     fun searchOnTopNavigation(message: String) {
-        val desktop = from(Desktop::class)
-        desktop.client.topNavSearch.click()
-        desktop.searchModal.search(message)
-        for (result in desktop.client.waitForSearchResults()) {
-            println(result.text)
-            assertTrue(result.text.uppercase().contains(message.uppercase()))
+        from(Desktop::class).run {
+            topNavSearch.click()
+            searchInput.run {
+                clearAndType(message)
+                press("ENTER")
+            }
+            for (result in waitForSearchResults()) {
+                assertTrue(result.text.uppercase().contains(message.uppercase()))
+            }
         }
         Thread.sleep(2000)
     }
