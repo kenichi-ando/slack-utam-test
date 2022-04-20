@@ -65,8 +65,8 @@ class SampleSlackUiTest {
                 clearAndType(message)
                 press("ENTER")
             }
-            for (result in waitForSearchResults()) {
-                assertTrue(result.text.uppercase().contains(message.uppercase()))
+            waitForSearchResults().forEach {
+                assertTrue(it.text.uppercase().contains(message.uppercase()))
             }
         }
         Thread.sleep(2000)
