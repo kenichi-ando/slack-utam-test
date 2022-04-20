@@ -11,31 +11,8 @@
       },
       "type": [
         "clickable"
-      ]
-    }
-  ],
-  "methods": [
-    {
-      "name": "waitForLink",
-      "compose": [
-        {
-          "apply": "waitFor",
-          "args": [
-            {
-              "type": "function",
-              "predicate": [
-                {
-                  "element": "link",
-                  "apply": "isVisible"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "element": "link"
-        }
-      ]
+      ],
+      "public": true
     }
   ]
 }

@@ -25,7 +25,8 @@
           "selector": {
             "css": "[data-qa='search_result']",
             "returnAll": true
-          }
+          },
+          "public": true
         },
         {
           "name": "searchPageCloseButton",
@@ -86,30 +87,6 @@
         "editable"
       ],
       "public": true
-    }
-  ],
-  "methods": [
-    {
-      "name": "waitForSearchResults",
-      "compose": [
-        {
-          "apply": "waitFor",
-          "args": [
-            {
-              "type": "function",
-              "predicate": [
-                {
-                  "element": "searchResults",
-                  "apply": "isVisible"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "element": "searchResults"
-        }
-      ]
     }
   ],
   "beforeLoad": [

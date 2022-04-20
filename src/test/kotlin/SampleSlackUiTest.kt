@@ -12,6 +12,7 @@ import utam.slack.pageobjects.Desktop
 import utam.slack.pageobjects.Login
 import utam.slack.pageobjects.Redirect
 import java.util.*
+import java.util.function.Supplier
 import kotlin.reflect.KClass
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -35,7 +36,10 @@ class SampleSlackUiTest {
             password.clearAndType(props.getProperty("slack.user.password"))
             signin.click()
         }
-        from(Redirect::class).waitForLink().click()
+        from(Redirect::class).run {
+            waitFor { link.isVisible }
+            link.click()
+        }
     }
 
     @AfterAll
@@ -65,7 +69,8 @@ class SampleSlackUiTest {
                 clearAndType(message)
                 press("ENTER")
             }
-            waitForSearchResults().forEach {
+            waitFor { searchResults.size > 0 }
+            searchResults.forEach {
                 assertTrue(it.text.uppercase().contains(message.uppercase()))
             }
         }
