@@ -1,0 +1,34 @@
+{
+  "elements": [
+    {
+      "name": "messageText",
+      "selector": {
+        "css": "[data-qa='message-text']"
+      },
+      "type": [
+        "actionable"
+      ],
+      "public": true
+    },
+    {
+      "name": "replyLink",
+      "selector": {
+        "css": "[data-qa='reply_bar'] a"
+      },
+      "type": [
+        "clickable"
+      ],
+      "public": true
+    },
+    {
+      "name": "startThread",
+      "selector": {
+        "css": "[data-qa='start_thread']"
+      },
+      "type": [
+        "clickable"
+      ],
+      "public": true
+    }
+  ]
+}

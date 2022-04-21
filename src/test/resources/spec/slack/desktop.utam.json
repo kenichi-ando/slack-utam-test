@@ -39,6 +39,16 @@
           "public": true
         },
         {
+          "name": "closeFlexpaneButton",
+          "selector": {
+            "css": "[data-qa='close_flexpane']"
+          },
+          "type": [
+            "clickable"
+          ],
+          "public": true
+        },
+        {
           "name": "generalChannel",
           "selector": {
             "css": "[data-qa='channel_sidebar_name_general']"
@@ -49,31 +59,28 @@
           "public": true
         },
         {
-          "name": "messageInput",
+          "name": "messages",
           "selector": {
-            "css": "[data-qa='message_input'] .ql-editor"
-          },
-          "type": [
-            "editable"
-          ],
-          "public": true
-        },
-        {
-          "name": "textSendButton",
-          "selector": {
-            "css": "[data-qa='texty_send_button']"
-          },
-          "type": [
-            "clickable"
-          ],
-          "public": true
-        },
-        {
-          "name": "messageTexts",
-          "selector": {
-            "css": "[data-qa='message-text']",
+            "css": "[data-qa='message_container']",
             "returnAll": true
           },
+          "type": "utam-slack/pageObjects/message",
+          "public": true
+        },
+        {
+          "name": "messageInputContainer",
+          "selector": {
+            "css": "[data-qa='message_input_container']"
+          },
+          "type": "utam-slack/pageObjects/editor",
+          "public": true
+        },
+        {
+          "name": "replyContainer",
+          "selector": {
+            "css": "[data-qa='reply_container']"
+          },
+          "type": "utam-slack/pageObjects/editor",
           "public": true
         }
       ]

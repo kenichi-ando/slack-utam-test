@@ -12,10 +12,8 @@ import utam.slack.pageobjects.Desktop
 import utam.slack.pageobjects.Login
 import utam.slack.pageobjects.Redirect
 import java.util.*
-import java.util.function.Supplier
 import kotlin.reflect.KClass
 import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -52,12 +50,40 @@ class SampleSlackUiTest {
     fun postMessage(message: String) {
         from(Desktop::class).run {
             generalChannel.click()
-            messageInput.clearAndType(message)
-            textSendButton.click()
-            assertNotNull(messageTexts)
-            assertEquals(message, messageTexts.last().text)
+            messageInputContainer.run {
+                messageInput.clearAndType(message)
+                textSendButton.click()
+            }
+            messages.last().waitForAbsence()
+            assertEquals(message, messages.last().messageText.text)
         }
-        Thread.sleep(2000)
+        Thread.sleep(1000)
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["Hello", "こんにちは"])
+    fun replyMessage(message: String) {
+        from(Desktop::class).run {
+            generalChannel.click()
+            messageInputContainer.run {
+                messageInput.clearAndType(message)
+                textSendButton.click()
+            }
+            messages.last().waitForAbsence()
+            messages.last().run {
+                messageText.moveTo()
+                startThread.click()
+            }
+            waitFor { replyContainer.isVisible }
+            replyContainer.run {
+                messageInput.clearAndType("Re: " + message)
+                textSendButton.click()
+            }
+            closeFlexpaneButton.click()
+            waitFor { messages.last().replyLink.isVisible }
+            assertEquals("1 reply", messages.last().replyLink.text)
+        }
+        Thread.sleep(1000)
     }
 
     @ParameterizedTest
@@ -74,6 +100,6 @@ class SampleSlackUiTest {
                 assertTrue(it.text.uppercase().contains(message.uppercase()))
             }
         }
-        Thread.sleep(2000)
+        Thread.sleep(1000)
     }
 }

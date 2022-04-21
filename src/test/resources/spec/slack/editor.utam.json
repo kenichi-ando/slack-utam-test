@@ -1,0 +1,24 @@
+{
+  "elements": [
+    {
+      "name": "messageInput",
+      "selector": {
+        "css": "[data-qa='message_input'] .ql-editor"
+      },
+      "type": [
+        "editable"
+      ],
+      "public": true
+    },
+    {
+      "name": "textSendButton",
+      "selector": {
+        "css": "[data-qa='texty_send_button']"
+      },
+      "type": [
+        "clickable"
+      ],
+      "public": true
+    }
+  ]
+}
